@@ -1,45 +1,42 @@
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println(info());
     }
     static String info() throws Exception{
-        System.out.println("Введите значение для расчета:");
+        System.out.println("Укажите данные:");
         Scanner scn = new Scanner(System.in);
-        String sc = scn.nextLine().trim(); // удаление не нужных пробелов в начале и в конце строки
+        String sc = scn.nextLine().trim(); // удаление пробелов
         return calc(sc);
     }
     public static String calc(String input) throws Exception {
-        int numberOne;
-        int numberTwo;
-        String arithmeticExpression;
-        String result;
-        boolean isRoman;
-        String[] aValues = input.split("[+\\-*/]");
-        if (aValues.length != 2) throw new Exception("Должно быть два операнда");
-        arithmeticExpression = detectOperation(input);
-        if (arithmeticExpression == null) throw new Exception("Неподдерживаемая математическая операция");
-        if (Converter.isRom(aValues[0]) && Converter.isRom(aValues[1])) {
-            numberOne = Converter.convertToArab(aValues[0]);
-            numberTwo = Converter.convertToArab(aValues[1]);
-            isRoman = true;
-        } else if (!Converter.isRom(aValues[0]) && !Converter.isRom(aValues[1])) {
-            numberOne = Integer.parseInt(aValues[0]);
-            numberTwo = Integer.parseInt(aValues[1]);
-            isRoman = false;
+        int oneN; // первое число
+        int twoN; // второе число
+        String action; // действие
+        String result; // результат
+        boolean isRom; // логическое выражение на  римские числа
+        String[] value = input.split("[+\\-*/]"); //регулярное выражение с экранированием, не понял, но сдул с youtube
+        if (value.length != 2) throw new Exception("Error!");
+        action = findAction(input);
+        if (action == null) throw new Exception("Error!");
+        if (Converter.isRom(value[0]) && Converter.isRom(value[1])) {
+            oneN = Converter.convertToArab(value[0]);
+            twoN = Converter.convertToArab(value[1]);
+            isRom = true;
+        } else if (!Converter.isRom(value[0]) && !Converter.isRom(value[1])) {
+            oneN = Integer.parseInt(value[0]);
+            twoN = Integer.parseInt(value[1]);
+            isRom = false;
         } else {
-            throw new Exception("Числа должны быть в одном формате");
+            throw new Exception("Error!");
         }
-
-        if (numberOne > 10 || numberTwo > 10) {
-            throw new Exception("Числа должны быть от 1 до 10");
+        if (oneN > 10 || twoN > 10) {
+            throw new Exception("Error!");
         }
-
-        int arabian = calc(numberOne, numberTwo, arithmeticExpression);
-        if (isRoman) {
+        int arabian = calc(oneN, twoN, action);
+        if (isRom) {
             if (arabian <= 0) {
-                throw new Exception("Римское число должно быть больше нуля");
+                throw new Exception("Error!");
             }
             result = Converter.convertToRom(arabian);
         } else {
@@ -47,36 +44,30 @@ public class Main {
         }
         return result;
     }
-
-    static String detectOperation(String inputValue) {
-        if (inputValue.contains("+")) {
+    static String findAction(String inputV) {
+        if (inputV.contains("+")) {
             return "+";
-        } else if (inputValue.contains("-")) {
+        } else if (inputV.contains("-")) {
             return "-";
-        } else if (inputValue.contains("*")) {
+        } else if (inputV.contains("*")) {
             return "*";
-        } else if (inputValue.contains("/")) {
+        } else if (inputV.contains("/")) {
             return "/";
         } else {
             return null;
         }
     }
-
-    static int calc(int valueOne, int valueTwo, String arithmeticExpression) {
-
-        if (arithmeticExpression.equals("+")) {
-            return valueOne + valueTwo;
-        } else if (arithmeticExpression.equals("-")) {
-            return valueOne - valueTwo;
-        } else if (arithmeticExpression.equals("*")) {
-            return valueOne * valueTwo;
+    static int calc(int oneV, int twoV, String action) {
+        if (action.equals("+")) {
+            return oneV + twoV;
+        } else if (action.equals("-")) {
+            return oneV - twoV;
+        } else if (action.equals("*")) {
+            return oneV * twoV;
+        } else if (action.equals("/")) {
+            return oneV / twoV;
         } else {
-            return valueOne / valueTwo;
+            return oneV / twoV;
         }
     }
-
 }
-
-
-
-

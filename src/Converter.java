@@ -8,7 +8,6 @@ class Converter {
             "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV",
             "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC", "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII",
             "XCVIII", "XCIX", "C"};
-
     public static boolean isRom(String val) {
         for (int i = 0; i < romanArray.length; i++) {
             if (val.equals(romanArray[i])) {
@@ -17,7 +16,6 @@ class Converter {
         }
         return false;
     }
-
     public static int convertToArab(String roman) {
         for (int i = 0; i < romanArray.length; i++) {
             if (roman.equals(romanArray[i])) {
@@ -26,7 +24,6 @@ class Converter {
         }
         return -1;
     }
-
     public static String convertToRom(int arabian) {
         return romanArray[arabian];
     }
